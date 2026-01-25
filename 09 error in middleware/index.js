@@ -36,42 +36,52 @@ app.get("/food", (req, res) => {
 app.use("/admine", auth)
 
 app.post("/admine", (req, res) => {
-    // add item to the food menu 
-    foodMenu.push(req.body);
-    res.status(200).send("Item added successfully");
+    try {// add item to the food menu 
+        foodMenu.push(req.body);
+        res.status(200).send("Item added successfully");
+    } catch (err) {
+        res.status(500).send("Error occred", err);
+    }
 })
 
 app.delete("/admine/:id", (req, res) => {
-
-    const id = req.params.id;
-    let index = foodMenu.findIndex((data) => {
-        return data.id == id;
-    })
-    if (index != -1) {
-        foodMenu.splice(index, 1);
-        res.status(200).send("Item Deleted successfully");
+    try {
+        const id = req.params.id;
+        let index = foodMenu.findIndex((data) => {
+            return data.id == id;
+        })
+        if (index != -1) {
+            foodMenu.splice(index, 1);
+            res.status(200).send("Item Deleted successfully");
+        }
+        else {
+            res.status(202).send("Itemnot found");
+        }
     }
-    else {
-        res.status(202).send("Itemnot found");
+    catch (err) {
+        res.status(500).send("Error Occred", err);
     }
 })
 
 app.patch("/admine", (req, res) => {
-    const id = req.body.id;
-    let data = foodMenu.find((data) => {
-        return data.id == id;
-    })
-    if (data) {
-        if (req.body.food)
-            data.food = req.body.food;
-        if (req.body.price)
-            data.price = req.body.price;
-        res.status(200).send("Item modified successfully");
+    try {
+        const id = req.body.id;
+        let data = foodMenu.find((data) => {
+            return data.id == id;
+        })
+        if (data) {
+            if (req.body.food)
+                data.food = req.body.food;
+            if (req.body.price)
+                data.price = req.body.price;
+            res.status(200).send("Item modified successfully");
+        }
+        else {
+            res.status(202).send("Item not found");
+        }
+    } catch (err) {
+        res.status(500).send("Error occred");
     }
-    else {
-        res.status(202).send("Item not found");
-    }
-
 })
 
 
@@ -82,32 +92,58 @@ app.get("/user", (req, res) => {
     res.send(addToCart);
 })
 app.post("/user/:id", (req, res) => {
-    let id = parseInt(req.params.id);
-    let data = foodMenu.find((data) => {
-        return data.id == id;
-    });
-    if (data) {
-        addToCart.push(data);
-        res.status(200).send("Item addedd successfully");
+    try {
+        let id = parseInt(req.params.id);
+        let data = foodMenu.find((data) => {
+            return data.id == id;
+        });
+        if (data) {
+            addToCart.push(data);
+            res.status(200).send("Item addedd successfully");
+        }
+        else {
+            res.status(400).send("Item is out of stock");
+        }
     }
-    else {
-        res.status(400).send("Item is out of stock");
+    catch (err) {
+        res.status(500).send("Error occored ", err);
     }
 })
 
 app.delete("/user/:id", (req, res) => {
-    let id = req.params.id;
-    let index = addToCart.findIndex((data) => {
-        return data.id == id;
-    })
-    if (index != -1) {
-        addToCart.splice(index, 1);
-        res.status(200).send("The idem is successfully from the cart");
+    try {
+        let id = req.params.id;
+        let index = addToCart.findIndex((data) => {
+            return data.id == id;
+        })
+        if (index != -1) {
+            addToCart.splice(index, 1);
+            res.status(200).send("The idem is successfully from the cart");
+        }
+        else {
+            res.status(400).send("The idem is not present in the cart");
+        }
     }
-    else {
-        res.status(400).send("The idem is not present in the cart");
+    catch (err) {
+        res.status(500).send("Some Error Occred", err);
     }
 })
+
+
+app.get("/dummy", (req, res) => {
+    // try {
+    //     // JSON.parse('Invalid Json');//this in not the valid json so it throw the error 
+    //     throw new Error("Brockn");
+    //     res.send("Hello coder");
+    // }
+    // catch (err) {
+    //     res.status(400).send("Some error occred", err);
+    // }
+
+    // throw new Error("Db can not connect");
+    // res.send("connected");
+})
+
 app.listen("3000", () => {
     console.log("The app is the listning on the 3000 port");
 })
