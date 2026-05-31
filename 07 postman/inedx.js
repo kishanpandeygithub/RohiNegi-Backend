@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 
 //parsing the data 
-// this is the use to parse the data in to the js object to the json data 
+// this is the use to parse the data in to the js object from the json data 
 app.use(express.json());
 
 
@@ -12,7 +12,7 @@ app.use(express.json());
 //         "age": "23"
 //     });
 // })
-app.get("/user", (req, res) => {
+app.get("/user", (req, res ,next) => {
     res.send({
         "name": "Kishan",
         "age": "23"

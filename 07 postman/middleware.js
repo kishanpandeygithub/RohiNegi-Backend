@@ -3,7 +3,7 @@ const app = express();
 //we can not send the two responce at one time until the clint is requested for that
 
 // what is the middleware 
-// the middleware the middle code which are exicuted befre the final responces 
+// the middleware the middle code which are exicuted before the final responces 
 // mw-> mw-> mw ->responce 
 // app.use("/user", (req, res, next) => {
 //     console.log("first");
