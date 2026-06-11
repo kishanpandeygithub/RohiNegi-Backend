@@ -22,7 +22,6 @@ app.get("/user", async (req, res) => {
 app.post("/register", async (req, res) => {
     try {
         validateUser(req.body);
-
         // converting the password into hash 
         req.body.password = await bcrypt.hash(req.body.password, 10);
         await User.create(req.body);

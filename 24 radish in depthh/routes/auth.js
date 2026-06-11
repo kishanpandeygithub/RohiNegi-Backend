@@ -68,7 +68,7 @@ authRouter.post("/logout", userAuth, async (req, res) => {
         await redisClint.set(`token:${token}`, "Blocked");
         //this line is used to set the expire of the token so that it automaticly deleted
         await redisClint.expire(`token:${token}`, payload.exp);
-        // res.cookie("token", null , {expires: new Date(Date.now())});
+        res.cookie("token", null , {expires: new Date(Date.now())});
         res.status(200).send("Logout successfully");
     }
     catch (err) {

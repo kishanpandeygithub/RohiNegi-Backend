@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const main = require("./index.js");
 const User = require("./models/user");
-const Book = require("./models/books");
 
 
 app.use(express.json());
