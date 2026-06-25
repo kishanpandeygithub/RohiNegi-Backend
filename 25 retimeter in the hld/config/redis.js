@@ -2,7 +2,7 @@ const redis = require("redis");
 
 const radisClint = redis.createClient({
     username: 'default',
-    password: 'mJgj7narze2VCdtnRig9KfU6UjtsvwNC',
+    password: '',
     socket: {
         host: 'redis-13535.crce206.ap-south-1-1.ec2.cloud.redislabs.com',
         port: 13535
